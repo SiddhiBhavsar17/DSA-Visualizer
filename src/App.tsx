@@ -1,27 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Home } from './components/Home';
-import { StackView } from './components/StackView';
-import { QueueView } from './components/QueueView';
+import { DSAProvider } from './context/DSAContext';
+import { Shell } from './components/layout/Shell';
+import { HomeDashboard } from './components/dashboard/HomeDashboard';
+import { StackLab } from './components/stack/StackLab';
+import { QueueLab } from './components/queue/QueueLab';
+import { ArrayLab } from './components/array/ArrayLab';
+import { LinkedListLab } from './components/linkedlist/LinkedListLab';
+import { ActiveModule } from './types/dsa';
 
-type ViewMode = 'home' | 'stack' | 'queue';
+const AppContent: React.FC = () => {
+  const validModules: ActiveModule[] = ['dashboard', 'stack', 'queue', 'array', 'linkedlist'];
 
-export const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<ViewMode>(() => {
-    const hash = window.location.hash.toLowerCase();
-    if (hash === '#stack') return 'stack';
-    if (hash === '#queue') return 'queue';
-    return 'home';
+  const [currentModule, setCurrentModule] = useState<ActiveModule>(() => {
+    const hash = window.location.hash.replace('#', '').toLowerCase();
+    if (validModules.includes(hash as ActiveModule)) {
+      return hash as ActiveModule;
+    }
+    return 'dashboard';
   });
 
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.toLowerCase();
-      if (hash === '#stack') {
-        setCurrentView('stack');
-      } else if (hash === '#queue') {
-        setCurrentView('queue');
+      const hash = window.location.hash.replace('#', '').toLowerCase();
+      if (validModules.includes(hash as ActiveModule)) {
+        setCurrentModule(hash as ActiveModule);
       } else {
-        setCurrentView('home');
+        setCurrentModule('dashboard');
       }
     };
 
@@ -29,24 +33,40 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  const navigateTo = (view: ViewMode) => {
-    setCurrentView(view);
-    if (view === 'home') {
-      window.location.hash = '';
-    } else {
-      window.location.hash = view;
+  const navigateTo = (mod: ActiveModule) => {
+    setCurrentModule(mod);
+    window.location.hash = mod === 'dashboard' ? '' : mod;
+  };
+
+  const renderModule = () => {
+    switch (currentModule) {
+      case 'stack':
+        return <StackLab />;
+      case 'queue':
+        return <QueueLab />;
+      case 'array':
+        return <ArrayLab />;
+      case 'linkedlist':
+        return <LinkedListLab />;
+      case 'dashboard':
+      default:
+        return <HomeDashboard onNavigate={navigateTo} />;
     }
   };
 
-  if (currentView === 'stack') {
-    return <StackView onBack={() => navigateTo('home')} />;
-  }
+  return (
+    <Shell currentModule={currentModule} onNavigate={navigateTo}>
+      {renderModule()}
+    </Shell>
+  );
+};
 
-  if (currentView === 'queue') {
-    return <QueueView onBack={() => navigateTo('home')} />;
-  }
-
-  return <Home onNavigate={navigateTo} />;
+export const App: React.FC = () => {
+  return (
+    <DSAProvider>
+      <AppContent />
+    </DSAProvider>
+  );
 };
 
 export default App;
