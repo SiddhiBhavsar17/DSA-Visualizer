@@ -1,11 +1,27 @@
-<div align="center">
+# DSA Stacks and Queue Visualization
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+An interactive React web application demonstrating fundamental Data Structures and Algorithms (DSA) concepts: **Stack** and **Queue**.
 
-  <h1>Built with AI Studio</h2>
+## Features
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+- **Stack Visualization**:
+  - Configurable stack capacity with overflow and underflow detection.
+  - Interactive **Push** (with custom numeric values or random generation) and **Pop** operations.
+  - Smooth element insertion animation (`fadeIn`).
+  - Stack state display (elements formatted from top to bottom).
+  - Built-in C++ reference implementation pseudocode for stack operations.
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+- **Queue Visualization**:
+  - Configurable queue capacity with overflow and underflow detection.
+  - Interactive **Enqueue** and **Dequeue** (FIFO) operations.
+  - Smooth element insertion animation (`fadeIn`).
+  - Queue state display (elements formatted from front to rear).
+  - Built-in C++ reference implementation pseudocode for queue operations.
 
-</div>
+- **Reference Pseudocode**:
+  - Quick reference on the home dashboard with standard algorithmic pseudocode for both data structures.
+
+## Tech Stack
+
+- **Framework**: React 19 with TypeScript
+- **Bundler**: Vite

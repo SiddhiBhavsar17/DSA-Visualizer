@@ -1,0 +1,6 @@
+{
+  "name": "DSA Stacks and Queue Visualization",
+  "description": "Interactive visualization and reference pseudocode for Stack and Queue data structures.",
+  "permissions": [],
+  "capabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
